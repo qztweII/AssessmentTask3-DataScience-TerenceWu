@@ -1,5 +1,6 @@
-def ohio():
-    print(1 + 1)
+import pandas as pd
 
-def rizzy():
-    print(3 * 3)
+df = pd.read_csv
+
+def graph():
+    pd.plot.
