@@ -1,4 +1,5 @@
 import data_module as dm
 
-dm.ohio()
-dm.rizzy()
+df = dm.read("Dummy Data.csv")
+
+print(df.describe)
