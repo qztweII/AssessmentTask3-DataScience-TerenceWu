@@ -22,11 +22,12 @@ def everyNYears(years, n):
     #Find the years column
     #Take every n years and store seperately
     #Return the result
+    pass
 
 def combine(data1, data2, common, data1Name, data2Name):
     for col in data1.columns:
         data1.pd.rename({col : (str(col) + data1Name)})
-    for col in datt2.columns:
+    for col in data2.columns:
         data2.pd.rename({col : (str(col) + data2Name)})
     mergedData = pd.merge(data1, data2, how='inner', on=common)
     return mergedData
