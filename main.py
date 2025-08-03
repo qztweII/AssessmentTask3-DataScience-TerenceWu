@@ -9,12 +9,32 @@ def show_menu():
     print("[S]ettings for graph")
     print("[E]xit")
 
+columnHeads = [list(df.columns.values)]
+columnSettings = {}
+for i in len(columnHeads):
+    columnSettings[i] = True
+
+def settings():
+    print("\nWhat do you want to change?")
+    for i in columnSettings:
+        print(f"{i}, {columnSettings[i]}")
+    notChosen = True
+    while notChosen:
+        try:
+            choice = int(input("What do you want to toggle?"))
+        except:
+            print("Choose from the menu!")
+        else:
+            if columnSettings[choice]:
+                columnSettings[choice] = False
+            else:
+                columnSettings[choice] = True
+
 def handle_choice(choice):
     if choice == 'M':
         print("Hello, Terence!")
     elif choice == 'S':
-        result = 5 + 7
-        print(f"5 + 7 = {result}")
+        settings()
     elif choice == 'E':
         print("Goodbye!")
         return False
@@ -22,16 +42,7 @@ def handle_choice(choice):
         print("Invalid choice. Try again.")
     return True
 
-columnHeads = [list(df.columns.values)]
-columnSettings = {}
-for i in columnHeads:
-    columnSettings[i] = True
 
-def settings(choice):
-    print("\nWhat do you want to change?")
-    for i in columnSettings:
-        print(f"{i}, {columnSettings[i]}")
-    #Selects the columns
 
 def main():
     running = True
