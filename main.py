@@ -1,5 +1,4 @@
 import dataModule as dm
-from pandas import *
 
 df = dm.read("Big Mac.csv")
 
@@ -39,8 +38,9 @@ def settings():
 
 def handle_choice(choice):
     if choice == 'M':
-        dm.read(df)
-        graph = dm.graph()
+        for k in df:
+            dm.clean(k)
+        dm.graph(df)
     elif choice == 'S':
         settings()
     elif choice == 'E':
@@ -61,6 +61,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-print(df.describe())
