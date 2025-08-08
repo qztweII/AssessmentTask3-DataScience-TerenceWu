@@ -38,8 +38,8 @@ def settings():
 
 def handle_choice(choice):
     if choice == 'M':
-        for k in df:
-            dm.clean(k)
+        dm.clean(df)
+        dm.toNum(df["Price of Big Mac (USD)"])
         dm.graph(df)
     elif choice == 'S':
         settings()

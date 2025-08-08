@@ -12,13 +12,27 @@ def update(data):
     df = data
 
 def graph(data):
-    plt.scatter(data["Country"], data["Price difference"])
+    plt.bar(data["Country"], data["Price of Big Mac (USD)"])
+    plt.ylabel("Price of Big Mac (USD)")
+    plt.xticks(90)
+    plt.title("Big Mac Prices by Country")
+    plt.show()
     plt.savefig("TEST!!!!")
     
-def clean(column):
-    dfNoNA = df[column].dropna() #Takes out the N/A values from that one column
-    median = dfNoNA.median() #Finds the median of the leftover values
-    df[column] = df[column].fillna(median) #Sticks the median back into the N/A values
+def clean(df):
+    for i in df:
+        dfNoNA = df[i].dropna() #Takes out the N/A values from that one column
+        try:
+            median = dfNoNA.median() #Finds the median of the leftover values
+            df[i] = df[i].fillna(median) #Sticks the median back into the N/A values
+        except:
+            pass
+
+def toNum(column):
+    for i in range(len(column)):
+        thing = str(column[i])
+        cleanedThing = thing.replace("$", "")
+        column[i] = cleanedThing
 
 def everyNYears(years, n):
     #Find the years column
