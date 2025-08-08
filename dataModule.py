@@ -5,8 +5,11 @@ def sort(df, stuff, goUp):
     sortedDF = df.sort_values(by = stuff, ascending = goUp)
     return sortedDF
 
-def graph(data):
-    plt.plot(data["Country"], data["Price of Big Mac (USD)"])
+def graph(data, settingsAvailable):
+    settingsAvailable.pop("Country")
+    for i in settingsAvailable:
+        if settingsAvailable[i]: #Plot according to the settings
+            plt.plot(data["Country"], data[i]) #Plot the lines
     plt.ylabel("Price of Big Mac (USD)")
     plt.title("Big Mac Prices by Country")
     plt.xticks(rotation = 90)
@@ -23,10 +26,10 @@ def clean(df, subsitution):
         except:
             pass
 
-def toNum(column):
+def toNum(column, thingToRemove):
     for i in range(len(column)):
         thing = str(column[i])
-        cleanedThing = thing.replace("$", "")
+        cleanedThing = thing.replace(thingToRemove, "")
         column[i] = float(cleanedThing)
 
 def everyNYears(years, n):

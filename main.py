@@ -26,7 +26,7 @@ def settings():
             print(columnSettings[i])
         choice =input("What do you want to toggle?")
         try:
-            if columnSettings[choice]:
+            if columnSettings[choice] and choice != "Country":
                 columnSettings[choice] = False
             else:
                 columnSettings[choice] = True   
@@ -41,9 +41,10 @@ def handle_choice(choice):
     global df
     if choice == 'M':
         dm.clean(df, False)
-        dm.toNum(df["Price of Big Mac (USD)"])
+        dm.toNum(df["Price of Big Mac (USD)"], "$")
+        dm.toNum(df["Price difference"], "%")
         df = dm.sort(df, "Price of Big Mac (USD)", True)
-        dm.graph(df)
+        dm.graph(df, columnSettings)
     elif choice == 'S':
         settings()
     elif choice == 'E':
