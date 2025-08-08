@@ -2,15 +2,16 @@ from pandas import *
 import matplotlib.pyplot as plt
 
 def sort(df, stuff, goUp):
-    sortedDF = df.sort(by = stuff, ascending = goUp)
+    sortedDF = df.sort_values(by = stuff, ascending = goUp)
     return sortedDF
 
 def graph(data):
     plt.plot(data["Country"], data["Price of Big Mac (USD)"])
     plt.ylabel("Price of Big Mac (USD)")
     plt.title("Big Mac Prices by Country")
+    plt.xticks(rotation = 90)
     plt.show()
-    plt.savefig("Graph - first thing")
+    plt.savefig("Graph - first thing") #This is not working(saves a blank figure)
     
 def clean(df, subsitution):
     for i in df:
