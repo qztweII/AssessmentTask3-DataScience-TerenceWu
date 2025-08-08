@@ -1,6 +1,7 @@
 import dataModule as dm
+import pandas as pd
 
-df = dm.read("Big Mac.csv")
+df = pd.read_csv("Big Mac.csv")
 
 def show_menu():
     print("\n=== Main Menu ===")
@@ -37,9 +38,11 @@ def settings():
 
 
 def handle_choice(choice):
+    global df
     if choice == 'M':
-        dm.clean(df)
+        dm.clean(df, False)
         dm.toNum(df["Price of Big Mac (USD)"])
+        df = dm.sort(df, "Price of Big Mac (USD)", True)
         dm.graph(df)
     elif choice == 'S':
         settings()

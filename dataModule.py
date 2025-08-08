@@ -1,30 +1,24 @@
 from pandas import *
 import matplotlib.pyplot as plt
 
-df = None
-
-def read(data):
-    df = read_csv(data)
-    return df
-
-def update(data):
-    global df
-    df = data
+def sort(df, stuff, goUp):
+    sortedDF = df.sort(by = stuff, ascending = goUp)
+    return sortedDF
 
 def graph(data):
-    plt.bar(data["Country"], data["Price of Big Mac (USD)"])
+    plt.plot(data["Country"], data["Price of Big Mac (USD)"])
     plt.ylabel("Price of Big Mac (USD)")
-    plt.xticks(90)
     plt.title("Big Mac Prices by Country")
     plt.show()
-    plt.savefig("TEST!!!!")
+    plt.savefig("Graph - first thing")
     
-def clean(df):
+def clean(df, subsitution):
     for i in df:
         dfNoNA = df[i].dropna() #Takes out the N/A values from that one column
         try:
-            median = dfNoNA.median() #Finds the median of the leftover values
-            df[i] = df[i].fillna(median) #Sticks the median back into the N/A values
+            if subsitution:
+                median = dfNoNA.median() #Finds the median of the leftover values
+                df[i] = df[i].fillna(median) #Sticks the median back into the N/A values
         except:
             pass
 
@@ -32,7 +26,7 @@ def toNum(column):
     for i in range(len(column)):
         thing = str(column[i])
         cleanedThing = thing.replace("$", "")
-        column[i] = cleanedThing
+        column[i] = float(cleanedThing)
 
 def everyNYears(years, n):
     #Find the years column
