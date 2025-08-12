@@ -1,20 +1,34 @@
 from pandas import *
-import matplotlib.pyplot as plt
+from matplotlib.pyplot import *
 
 def sort(df, stuff, goUp):
     sortedDF = df.sort_values(by = stuff, ascending = goUp)
     return sortedDF
 
 def graph(data, settingsAvailable):
-    settingsAvailable.pop("Country")
+    fig, ax1 = subplots()
+    colours = ["tab:red", "tab:blue", "tab:orange", "tab:green", "tab:purple", "tab:brown", "tab:pink", "tab:gray"]
+    ax1.set_xlabel('Country')
+    ax1.set_ylabel('Price of Big Mac (USD)', color="tab:red")
+    ax1.plot(data["Country"], data["Price of Big Mac (USD)"], color="tab:red")
+    ax1.tick_params(axis='y', labelcolor="tab:red")
+    axes = {}
+    colourPicker = 1
     for i in settingsAvailable:
-        if settingsAvailable[i]: #Plot according to the settings
-            plt.plot(data["Country"], data[i]) #Plot the lines
-    plt.ylabel("Price of Big Mac (USD)")
-    plt.title("Big Mac Prices by Country")
-    plt.xticks(rotation = 90)
-    plt.show()
-    plt.savefig("Graph - first thing") #This is not working(saves a blank figure)
+        if settingsAvailable[i] and i != "Country" and i != "Price of Big Mac (USD)": #Plot according to the settings
+            axes[f"axis{i}"] = ax1.twinx()
+            axes[f"axis{i}"].plot(data["Country"], data[i], color=colours[colourPicker])
+            axes[f"axis{i}"].set_ylabel(i)
+            globals()[f"ax{i}"] = ax1.twinx()
+            colourPicker += 1
+
+    show()
+
+    #plt.ylabel("Price of Big Mac (USD)")
+    #plt.title("Big Mac Prices by Country")
+    #plt.xticks(rotation = 90)
+    #plt.show()
+    #plt.savefig("Graph - first thing") #This is not working(saves a blank figure)
     
 def clean(df, subsitution):
     for i in df:
