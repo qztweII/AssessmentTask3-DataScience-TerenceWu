@@ -5,7 +5,7 @@ import dataModule as dm
 data = pd.read_csv("Big Mac.csv")
 
 columnHeads = [list(data.columns.values)]
-columnHeads["Price Difference"] = toNum(columnHeads["Price Difference"], "%")
+columnHeads["Price Difference"] = dm.toNum(columnHeads["Price Difference"], "%")
 columnHeads = columnHeads[0] #The function before returns a list in a list. 
 settingsAvailable = {}
 for i in columnHeads:

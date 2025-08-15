@@ -7,22 +7,24 @@ def sort(df, stuff, goUp):
 
 def graph(data, settingsAvailable):
     fig, ax1 = subplots()
+    headers = list(settingsAvailable.items())
     colours = ["tab:red", "tab:blue", "tab:orange", "tab:green", "tab:purple", "tab:brown", "tab:pink", "tab:gray"]
     ax1.set_xlabel('Country')
-    ax1.set_ylabel('Price of Big Mac (USD)', color="tab:red")
-    ax1.plot(data["Country"], data["Price of Big Mac (USD)"], color="tab:red")
+    ax1.set_ylabel(headers[1][0], color="tab:red")
+    ax1.plot(data[headers[0][0]], data[headers[1][0]], color="tab:red")
     ax1.tick_params(axis='y', labelcolor="tab:red")
     axes = {}
     colourPicker = 1
     for i in settingsAvailable:
-        if settingsAvailable[i] and i != "Country" and i != "Price of Big Mac (USD)": #Plot according to the settings
+        if settingsAvailable[i]: #Plot according to the settings
             axes[f"axis{i}"] = ax1.twinx()
-            axes[f"axis{i}"].plot(data["Country"], data[i], color=colours[colourPicker])
+            axes[f"axis{i}"].plot(data[headers[0][0]], data[i], color=colours[colourPicker % len(colours)])
             axes[f"axis{i}"].set_ylabel(i)
             globals()[f"ax{i}"] = ax1.twinx()
             colourPicker += 1
 
     show()
+    savefig("chaoticGraphOfDeath.png")
 
     #plt.ylabel("Price of Big Mac (USD)")
     #plt.title("Big Mac Prices by Country")
