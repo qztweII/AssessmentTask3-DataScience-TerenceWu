@@ -10,6 +10,7 @@ def graph(data, settingsAvailable):
     headers = list(settingsAvailable.items())
     colours = ["tab:red", "tab:blue", "tab:orange", "tab:green", "tab:purple", "tab:brown", "tab:pink", "tab:gray"]
     ax1.set_xlabel('Country')
+    xticks(rotation = 90)
     ax1.set_ylabel(headers[1][0], color="tab:red")
     ax1.plot(data[headers[0][0]], data[headers[1][0]], color="tab:red")
     ax1.tick_params(axis='y', labelcolor="tab:red")
@@ -23,8 +24,12 @@ def graph(data, settingsAvailable):
             globals()[f"ax{i}"] = ax1.twinx()
             colourPicker += 1
 
-    show()
-    savefig("chaoticGraphOfDeath.png")
+    fig.legend(loc="lower left", fontsize="large", title="Legend")
+    save = input("Would you like your figure to be saved? (Y/N)")
+    if save == "Y":
+        filename = input("What do you want your figure to be called?")
+        fig.savefig(f"Pictures (Some may be blank)/chaoticGraphOfDeath.png")
+    fig.show()
 
     #plt.ylabel("Price of Big Mac (USD)")
     #plt.title("Big Mac Prices by Country")

@@ -1,7 +1,7 @@
 import dataModule as dm
 import pandas as pd
 
-df = pd.read_csv("big-mac-source-data-v2.csv")
+df = pd.read_csv("bigMacData.csv")
 
 def show_menu():
     print("\n=== Main Menu ===")
