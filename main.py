@@ -16,7 +16,7 @@ for i in columnHeads:
     columnSettings[i] = True
 
 def settings():
-    print("\nWhat do you want to change?")
+    print("\n=== Show/hide columns ===")
     notChosen = True
     while notChosen:
         for i in columnSettings:
@@ -26,12 +26,17 @@ def settings():
             print(columnSettings[i])
         choice =input("What do you want to toggle?")
         try:
-            if columnSettings[choice] and choice != "Country":
+            if columnSettings[choice] and choice != "name":
                 columnSettings[choice] = False
             else:
                 columnSettings[choice] = True   
+            if choice == "name":
+                print("Country must be displayed")
         except:
-            print("Please choose from the menu!")
+            if choice == "exit":
+                notChosen = False
+            else:
+                print("Please choose from the menu!")
         else:
             notChosen = False
             print(f"{choice} {'will be' if columnSettings[choice] else 'will not be'} displayed in the graph. ")
