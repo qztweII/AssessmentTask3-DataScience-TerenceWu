@@ -46,9 +46,7 @@ def handle_choice(choice):
     global df
     if choice == 'M':
         dm.clean(df, False)
-        #dm.toNum(df["Price of Big Mac (USD)"], "$")
-        #dm.toNum(df["Price difference"], "%")
-        df = dm.sort(df, "dollar_ex", True)
+        df = dm.sort(df, "GDP_local", True)
         dm.graph(df, columnSettings)
     elif choice == 'S':
         settings()

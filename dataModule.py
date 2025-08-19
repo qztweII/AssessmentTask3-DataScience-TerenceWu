@@ -6,27 +6,35 @@ def sort(df, stuff, goUp):
     return sortedDF
 
 def graph(data, settingsAvailable):
+    years = {}
+    for year in data.groupby('date'):
+        years[f"year{year}"] = year
+    
     fig, ax1 = subplots() #Make the graph itself
     headers = list(settingsAvailable.items())
     trueHeaders = [x[0] for x in headers if x[1]] #Get the columns that the user wanted to be displayed
     colours = ["tab:red", "tab:blue", "tab:orange", "tab:green", "tab:purple", "tab:brown", "tab:pink", "tab:gray"]
+    
     ax1.set_xlabel('Country') #Country names will always be displayed
     xticks(rotation = 90)
     '''Graph the first y axis'''
     ax1.set_ylabel(trueHeaders[1], color="tab:red")
     ax1.plot(data[trueHeaders[0]], data[trueHeaders[1]], color="tab:red")
     ax1.tick_params(axis='y', labelcolor="tab:red")
+    
     axes = {}
     colourPicker = 1
     '''Graph the other y axes'''
-    for i in trueHeaders[2:]:
-        if settingsAvailable[i]: #Plot according to the settings
-            axes[f"axis{i}"] = ax1.twinx()
-            axes[f"axis{i}"].plot(data[trueHeaders[0]], data[i], color=colours[colourPicker % len(colours)])
-            axes[f"axis{i}"].set_ylabel(i)
-            axes[f"axis{i}"].spines[f'{"left" if colourPicker % 2 == 1 else "right"}'].set_position(('outward', 20 * colourPicker))  # move 60 pts outward
-            axes[f"axis{i}"].tick_params(axis='y', colors=colours[colourPicker % len(colours)])
-            axes[f"axis{i}"].yaxis.label.set_color(colours[colourPicker % len(colours)])
+    for selectedYear in years:
+        for i in selectedYear[2:]:
+            print(i, end='')
+            #if settingsAvailable[i]: #Plot according to the settings
+                #axes[f"axis{i}"] = ax1.twinx()
+                #axes[f"axis{i}"].plot(data[trueHeaders[0]], data[i], color=colours[colourPicker % len(colours)])
+                #axes[f"axis{i}"].set_ylabel(i)
+                #axes[f"axis{i}"].spines[f'{"left" if colourPicker % 2 == 1 else "right"}'].set_position(('outward', 20 * colourPicker))  # move 60 pts outward
+                #axes[f"axis{i}"].tick_params(axis='y', colors=colours[colourPicker % len(colours)])
+                #axes[f"axis{i}"].yaxis.label.set_color(colours[colourPicker % len(colours)])
 
 
             globals()[f"ax{i}"] = ax1.twinx()
