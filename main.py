@@ -31,7 +31,7 @@ def settings():
             else:
                 columnSettings[choice] = True   
             if choice == "name":
-                print("Country must be displayed")
+                print("Country cannot be displayed on the y axis")
         except:
             if choice == "exit":
                 notChosen = False

@@ -6,9 +6,7 @@ def sort(df, stuff, goUp):
     return sortedDF
 
 def graph(data, settingsAvailable):
-    years = {}
-    for year in data.groupby('date'):
-        years[f"year{year}"] = year
+    years = [group for year, group in data.groupby("date")]
     
     fig, ax1 = subplots() #Make the graph itself
     headers = list(settingsAvailable.items())
@@ -18,27 +16,58 @@ def graph(data, settingsAvailable):
     ax1.set_xlabel('Country') #Country names will always be displayed
     xticks(rotation = 90)
     '''Graph the first y axis'''
+    data = data.sort_values(by='name')
     ax1.set_ylabel(trueHeaders[1], color="tab:red")
-    ax1.plot(data[trueHeaders[0]], data[trueHeaders[1]], color="tab:red")
+    ax1.plot(data[trueHeaders[0]], data[trueHeaders[1]], color="tab:red", marker = 'o')
     ax1.tick_params(axis='y', labelcolor="tab:red")
     
     axes = {}
     colourPicker = 1
     '''Graph the other y axes'''
-    for selectedYear in years:
-        for i in selectedYear[2:]:
-            print(i, end='')
-            #if settingsAvailable[i]: #Plot according to the settings
-                #axes[f"axis{i}"] = ax1.twinx()
-                #axes[f"axis{i}"].plot(data[trueHeaders[0]], data[i], color=colours[colourPicker % len(colours)])
-                #axes[f"axis{i}"].set_ylabel(i)
-                #axes[f"axis{i}"].spines[f'{"left" if colourPicker % 2 == 1 else "right"}'].set_position(('outward', 20 * colourPicker))  # move 60 pts outward
-                #axes[f"axis{i}"].tick_params(axis='y', colors=colours[colourPicker % len(colours)])
-                #axes[f"axis{i}"].yaxis.label.set_color(colours[colourPicker % len(colours)])
+    #for selectedYear in years:
+    unsortedYear = years[25]
+    selectedYear = unsortedYear.sort_values(by="name")
+    print(selectedYear)
+    for i in selectedYear.columns:
+        print(i)
+        if i in ["name", 'date']:
+            continue
+        if not settingsAvailable[i]: #Plot according to the settings (don't display the country names on the y axis)
+            continue
 
-
-            globals()[f"ax{i}"] = ax1.twinx()
-            colourPicker += 1
+        # Create a new y-axis
+        ax_new = ax1.twinx()
+    
+    
+        # Plot data
+        ax_new.plot(
+            selectedYear["name"], 
+            selectedYear[i], 
+            marker='o',
+            color=colours[colourPicker % len(colours)]
+        )
+    
+        # Offset left/right alternately to avoid overlapping spines
+        side = "left" if colourPicker % 2 == 1 else "right"
+        ax_new.spines[side].set_position(("outward", 20 * colourPicker))
+        
+        # Style axis
+        ax_new.set_ylabel(i, color=colours[colourPicker % len(colours)])
+        ax_new.tick_params(axis='y', colors=colours[colourPicker % len(colours)])
+    
+        # Store axis handle if you need it later
+        axes[i] = ax_new
+    
+        # Increment colour/side counter
+        colourPicker += 1
+        #axes[f"axis{i}"] = ax1.twinx()
+        #axes[f"axis{i}"].plot(selectedYear["name"], selectedYear[i], color=colours[colourPicker % len(colours)])
+        #axes[f"axis{i}"].set_ylabel(i)
+        #axes[f"axis{i}"].spines[f'{"left" if colourPicker % 2 == 1 else "right"}'].set_position(('outward', 20 * colourPicker))  # move 60 pts outward
+        #axes[f"axis{i}"].tick_params(axis='y', colors=colours[colourPicker % len(colours)])
+        #axes[f"axis{i}"].yaxis.label.set_color(colours[colourPicker % len(colours)])
+        #globals()[f"ax{i}"] = ax1.twinx()
+        #colourPicker += 1
 
     fig.legend(loc="lower left", fontsize="large", title="Legend") #Add a legend
 
