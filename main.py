@@ -46,7 +46,6 @@ def handle_choice(choice):
     global df
     if choice == 'M':
         dm.clean(df, False)
-        df = dm.sort(df, "GDP_local", True)
         dm.graph(df, columnSettings)
     elif choice == 'S':
         settings()

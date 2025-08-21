@@ -10,16 +10,18 @@ def graph(data, settingsAvailable):
     
     fig, ax1 = subplots() #Make the graph itself
     headers = list(settingsAvailable.items())
-    trueHeaders = [x[0] for x in headers if x[1]] #Get the columns that the user wanted to be displayed
+    #trueHeaders = [x[0] for x in headers if x[1]] #Get the columns that the user wanted to be displayed
     colours = ["tab:red", "tab:blue", "tab:orange", "tab:green", "tab:purple", "tab:brown", "tab:pink", "tab:gray"]
     
     ax1.set_xlabel('Country') #Country names will always be displayed
     xticks(rotation = 90)
-    '''Graph the first y axis'''
-    data = data.sort_values(by='name')
-    ax1.set_ylabel(trueHeaders[1], color="tab:red")
-    ax1.plot(data[trueHeaders[0]], data[trueHeaders[1]], color="tab:red", marker = 'o')
-    ax1.tick_params(axis='y', labelcolor="tab:red")
+    #'''Graph the first y axis'''
+    #yscale("log")
+    #data = data.sort_values(by='name')
+    #ax1.set_ylabel(trueHeaders[1], color="tab:red")
+    #ax1.plot(data[trueHeaders[0]], data[trueHeaders[1]], color="tab:red", marker = 'o')
+    #ax1.tick_params(axis='y', labelcolor="tab:red")
+
     
     axes = {}
     colourPicker = 1
@@ -49,12 +51,15 @@ def graph(data, settingsAvailable):
     
         # Offset left/right alternately to avoid overlapping spines
         side = "left" if colourPicker % 2 == 1 else "right"
-        ax_new.spines[side].set_position(("outward", 20 * colourPicker))
+        ax_new.spines[side].set_position(("outward", 20 * (colourPicker + 1)))
         
         # Style axis
         ax_new.set_ylabel(i, color=colours[colourPicker % len(colours)])
         ax_new.tick_params(axis='y', colors=colours[colourPicker % len(colours)])
     
+        #Log scale
+        yscale("log")
+        
         # Store axis handle if you need it later
         axes[i] = ax_new
     
