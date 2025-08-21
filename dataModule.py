@@ -27,7 +27,15 @@ def graph(data, settingsAvailable):
     colourPicker = 1
     '''Graph the other y axes'''
     #for selectedYear in years:
-    unsortedYear = years[25]
+    while True:
+        try:
+            whatYear = int(input("What year do you want to view (Answer as 20, for 2020)"))
+            unsortedYear = years[whatYear]
+        except:
+            print("Please select properly")
+        else:
+            break
+    
     selectedYear = unsortedYear.sort_values(by="name")
     print(selectedYear)
     for i in selectedYear.columns:
